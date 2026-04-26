@@ -10,12 +10,16 @@ on:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
       - name: Install frontend dependencies
         run: npm ci
       - name: Prettier
@@ -26,3 +30,34 @@ jobs:
         run: npm run test:unit
       - name: NPM audit
         run: npm audit --audit-level=high
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Ruff
+        run: ruff check .
+      - name: Bandit
+        run: bandit -q -r core usr evl main.py
+      - name: Pytest
+        env:
+          APP_ENV: test
+          DEBUG: true
+          DB_URL_ASYNC: sqlite+aiosqlite:///./ci.db
+          DB_URL_SYNC: sqlite:///./ci.db
+          JWT_SECRET: ci-test-secret-key-with-safe-length-123456
+          GROQ_API_KEY: ci-test-key
+          CELERY_TASK_ALWAYS_EAGER: true
+        run: pytest -q
+      - name: Docker build
+        run: docker build -t tez-ielts-backend:ci .

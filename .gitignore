@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/frontend/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -12,11 +13,12 @@
 
 # testing
 /coverage
-/playwright-report
-/test-results
-.pytest_cache
-.ruff_cache
-.coverage
+/frontend/coverage
+/frontend/playwright-report
+/frontend/test-results
+**/.pytest_cache/
+**/.ruff_cache/
+**/.coverage
 
 # python
 **/__pycache__/
@@ -28,11 +30,14 @@
 
 # next.js
 /.next/
+/frontend/.next/
 /out/
+/frontend/out/
 
 # production
 /build
 logs/
+**/logs/
 
 # misc
 .DS_Store
@@ -47,9 +52,12 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+!frontend/.env.example
+!backend/.env.example
 
 # vercel
 .vercel
+/frontend/.vercel
 
 # typescript
 *.tsbuildinfo
