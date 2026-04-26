@@ -16,6 +16,15 @@
 /test-results
 .pytest_cache
 .ruff_cache
+.coverage
+
+# python
+**/__pycache__/
+*.py[cod]
+*.sqlite3
+*.db
+*.egg-info/
+.venv/
 
 # next.js
 /.next/
@@ -23,6 +32,7 @@
 
 # production
 /build
+logs/
 
 # misc
 .DS_Store

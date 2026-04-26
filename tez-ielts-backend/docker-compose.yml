@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: ielts_postgres
+    environment:
+      POSTGRES_USER: ielts_user
+      POSTGRES_PASSWORD: ielts_password
+      POSTGRES_DB: ielts_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ielts_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@oneielts.uz
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: ielts_redis
+    ports:
+      - "6380:6379"
+    restart: unless-stopped
+
+  celery_worker:
+    build: .
+    container_name: ielts_worker
+    command: celery -A core.celery_app worker --loglevel=info
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DB_URL_ASYNC=postgresql+asyncpg://ielts_user:ielts_password@postgres:5432/ielts_db
+      - GROQ_API_KEY=YOUR_GROQ_KEY_HERE
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+volumes:
+
+  postgres_data:
