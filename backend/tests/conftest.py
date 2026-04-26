@@ -15,14 +15,14 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-os.environ.setdefault("APP_ENV", "test")
-os.environ.setdefault("DEBUG", "true")
-os.environ.setdefault("DB_URL_ASYNC", TEST_DB_URL)
-os.environ.setdefault("DB_URL_SYNC", f"sqlite:///{TEST_DB_PATH}")
-os.environ.setdefault("JWT_SECRET", "test-secret-key-with-safe-length-123456")
-os.environ.setdefault("REDIS_URL", "redis://localhost:6380/1")
-os.environ.setdefault("CELERY_TASK_ALWAYS_EAGER", "true")
-os.environ.setdefault("GROQ_API_KEY", "test-groq-key")
+os.environ["APP_ENV"] = "test"
+os.environ["DEBUG"] = "true"
+os.environ["DB_URL_ASYNC"] = TEST_DB_URL
+os.environ["DB_URL_SYNC"] = f"sqlite:///{TEST_DB_PATH}"
+os.environ["JWT_SECRET"] = "test-secret-key-with-safe-length-123456"
+os.environ["REDIS_URL"] = "redis://localhost:6380/1"
+os.environ["CELERY_TASK_ALWAYS_EAGER"] = "true"
+os.environ["GROQ_API_KEY"] = "test-groq-key"
 
 from core.db import Base  # noqa: E402
 from main import app  # noqa: E402
