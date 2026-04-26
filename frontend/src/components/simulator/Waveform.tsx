@@ -8,7 +8,11 @@ interface WaveformProps {
   color?: string;
 }
 
-export default function Waveform({ analyzerNode, isActive, color = '#2563eb' }: WaveformProps) {
+export default function Waveform({
+  analyzerNode,
+  isActive,
+  color = '#2563eb',
+}: WaveformProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
 
@@ -64,8 +68,8 @@ export default function Waveform({ analyzerNode, isActive, color = '#2563eb' }: 
   }, [analyzerNode, isActive, color]);
 
   return (
-    <canvas 
-      ref={canvasRef} 
+    <canvas
+      ref={canvasRef}
       className="w-full h-16 rounded-lg bg-gray-50 border border-gray-100"
       width={400}
       height={100}

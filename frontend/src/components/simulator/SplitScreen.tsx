@@ -11,19 +11,19 @@ interface SplitScreenProps {
   rightMinSize?: number;
 }
 
-export default function SplitScreen({ 
-  leftContent, 
-  rightContent, 
-  leftMinSize = 30, 
-  rightMinSize = 30 
+export default function SplitScreen({
+  leftContent,
+  rightContent,
+  leftMinSize = 30,
+  rightMinSize = 30,
 }: SplitScreenProps) {
   return (
     <div className="w-full h-full flex flex-col bg-white overflow-hidden">
       <PanelGroup direction="horizontal" autoSaveId="ielts_sim_split">
         {/* Left Panel - Text / Passage / Graphics */}
-        <Panel 
-          defaultSize={50} 
-          minSize={leftMinSize} 
+        <Panel
+          defaultSize={50}
+          minSize={leftMinSize}
           className="h-full relative overflow-hidden bg-[#fafafa]"
         >
           <div className="absolute inset-0 overflow-y-auto px-8 py-6 custom-scrollbar">
@@ -39,8 +39,8 @@ export default function SplitScreen({
         </PanelResizeHandle>
 
         {/* Right Panel - Questions */}
-        <Panel 
-          defaultSize={50} 
+        <Panel
+          defaultSize={50}
           minSize={rightMinSize}
           className="h-full relative overflow-hidden bg-white"
         >
@@ -49,9 +49,11 @@ export default function SplitScreen({
           </div>
         </Panel>
       </PanelGroup>
-      
+
       {/* Global styles for custom scrollbar within SplitScreen */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
         }
@@ -65,7 +67,9 @@ export default function SplitScreen({
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background-color: #94a3b8;
         }
-      `}} />
+      `,
+        }}
+      />
     </div>
   );
 }

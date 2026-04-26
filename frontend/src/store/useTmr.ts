@@ -27,12 +27,15 @@ export const useTmr = create<TmrState>()(
       reset_t: () => {
         log_i('tmr_reset');
         set({ end_t: null, is_running: false });
-      }
+      },
     }),
-    { 
+    {
       name: 'sim_tmr_st',
       // Only persist the end time, is_running can be reset or evaluated
-      partialize: (state) => ({ end_t: state.end_t, is_running: state.is_running })
+      partialize: (state) => ({
+        end_t: state.end_t,
+        is_running: state.is_running,
+      }),
     }
   )
 );

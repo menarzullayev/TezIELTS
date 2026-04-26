@@ -24,7 +24,7 @@ export default function AudioPlayer({ src, onEnded }: AudioPlayerProps) {
     // and resetting currentTime to the last known position.
     // However, a strictly simpler way is to just hide native controls
     // and only expose play/pause, which we do below.
-    
+
     // We can also prevent context menu to stop people from downloading
     const handleContextMenu = (e: MouseEvent) => e.preventDefault();
     audio.addEventListener('contextmenu', handleContextMenu);
@@ -37,7 +37,7 @@ export default function AudioPlayer({ src, onEnded }: AudioPlayerProps) {
 
     const handleError = () => {
       log_w('audio_error', { src });
-      setError("Audio yuklashda xatolik yuz berdi. Iltimos tekshiring.");
+      setError('Audio yuklashda xatolik yuz berdi. Iltimos tekshiring.');
     };
 
     audio.addEventListener('ended', handleEnded);
@@ -52,12 +52,12 @@ export default function AudioPlayer({ src, onEnded }: AudioPlayerProps) {
 
   const togglePlay = () => {
     if (!audioRef.current) return;
-    
+
     if (isPlaying) {
       audioRef.current.pause();
       log_i('audio_paused');
     } else {
-      audioRef.current.play().catch(e => {
+      audioRef.current.play().catch((e) => {
         log_w('audio_play_blocked', e);
       });
       log_i('audio_played');
@@ -89,7 +89,11 @@ export default function AudioPlayer({ src, onEnded }: AudioPlayerProps) {
   };
 
   if (error) {
-    return <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm border border-red-200">{error}</div>;
+    return (
+      <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm border border-red-200">
+        {error}
+      </div>
+    );
   }
 
   return (
@@ -98,30 +102,45 @@ export default function AudioPlayer({ src, onEnded }: AudioPlayerProps) {
       <audio ref={audioRef} src={src} preload="auto" />
 
       {/* Play/Pause Button */}
-      <button 
+      <button
         onClick={togglePlay}
         className="w-12 h-12 bg-primary hover:bg-primary/90 text-white rounded-full flex items-center justify-center transition-transform active:scale-95 flex-shrink-0"
       >
-        {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-1" />}
+        {isPlaying ? (
+          <Pause className="w-6 h-6 fill-current" />
+        ) : (
+          <Play className="w-6 h-6 fill-current ml-1" />
+        )}
       </button>
 
       <div className="flex flex-col flex-grow gap-1">
-        <span className="text-sm font-medium text-slate-200 truncate">Listening Test Audio</span>
+        <span className="text-sm font-medium text-slate-200 truncate">
+          Listening Test Audio
+        </span>
         {/* Fake progress bar (animated simply to show activity, or could be tied to timeUpdate but user specifically asked to block seeking) */}
         <div className="h-1.5 w-full bg-slate-600 rounded-full overflow-hidden">
-          <div className={`h-full bg-primary transition-all duration-1000 ${isPlaying ? 'w-full animate-pulse' : 'w-0'}`} />
+          <div
+            className={`h-full bg-primary transition-all duration-1000 ${isPlaying ? 'w-full animate-pulse' : 'w-0'}`}
+          />
         </div>
       </div>
 
       {/* Volume Control */}
       <div className="flex items-center gap-2 group">
-        <button onClick={toggleMute} className="text-slate-300 hover:text-white transition-colors">
-          {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+        <button
+          onClick={toggleMute}
+          className="text-slate-300 hover:text-white transition-colors"
+        >
+          {isMuted || volume === 0 ? (
+            <VolumeX className="w-5 h-5" />
+          ) : (
+            <Volume2 className="w-5 h-5" />
+          )}
         </button>
-        <input 
-          type="range" 
-          min="0" 
-          max="1" 
+        <input
+          type="range"
+          min="0"
+          max="1"
           step="0.05"
           value={volume}
           onChange={handleVolumeChange}

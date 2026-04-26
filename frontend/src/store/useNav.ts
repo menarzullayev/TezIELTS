@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import { log_i } from '@/lib/logger';
 
 interface NavState {
-  active_q: string | null;     // Active Question ID
-  active_sec: string | null;   // Active Section ID
+  active_q: string | null; // Active Question ID
+  active_sec: string | null; // Active Section ID
   set_nav: (sec_id: string, q_id: string) => void;
 }
 
@@ -16,5 +16,5 @@ export const useNav = create<NavState>()((set) => ({
   set_nav: (sec_id, q_id) => {
     log_i('nav_set', { sec_id, q_id });
     set({ active_sec: sec_id, active_q: q_id });
-  }
+  },
 }));

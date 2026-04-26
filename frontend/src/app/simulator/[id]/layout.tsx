@@ -11,7 +11,7 @@ interface SimulatorLayoutProps {
 
 export default function SimulatorLayout({ children }: SimulatorLayoutProps) {
   const [mounted, setMounted] = useState(false);
-  
+
   // Mock question IDs for BottomNav - in real use, this comes from the test data
   const mockQIds = Array.from({ length: 40 }, (_, i) => `q${i + 1}`);
 
@@ -36,7 +36,9 @@ export default function SimulatorLayout({ children }: SimulatorLayoutProps) {
             Tez<span className="text-primary">IELTS</span>
           </span>
           <div className="h-6 w-px bg-gray-200"></div>
-          <h1 className="text-sm font-medium text-gray-500 uppercase tracking-widest">Mock Test Simulator</h1>
+          <h1 className="text-sm font-medium text-gray-500 uppercase tracking-widest">
+            Mock Test Simulator
+          </h1>
         </div>
 
         <div className="flex items-center gap-6">
@@ -48,9 +50,7 @@ export default function SimulatorLayout({ children }: SimulatorLayoutProps) {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-grow relative overflow-hidden">
-        {children}
-      </main>
+      <main className="flex-grow relative overflow-hidden">{children}</main>
 
       {/* Bottom Navigation */}
       <BottomNav questionIds={mockQIds} />

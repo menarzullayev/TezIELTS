@@ -9,7 +9,10 @@ interface BottomNavProps {
   questionIds: string[]; // e.g. ["q1", "q2", ..., "q40"]
 }
 
-export default function BottomNav({ totalQuestions = 40, questionIds }: BottomNavProps) {
+export default function BottomNav({
+  totalQuestions = 40,
+  questionIds,
+}: BottomNavProps) {
   const { ans } = useAns();
   const { active_q, set_nav } = useNav();
   const [mounted, setMounted] = useState(false);
@@ -36,7 +39,7 @@ export default function BottomNav({ totalQuestions = 40, questionIds }: BottomNa
         {questionIds.map((qid, index) => {
           const hasAnswer = ans[qid] && ans[qid].trim().length > 0;
           const isActive = active_q === qid;
-          
+
           return (
             <button
               key={qid}
@@ -44,7 +47,9 @@ export default function BottomNav({ totalQuestions = 40, questionIds }: BottomNa
                 // Determine section ID based on your data structure, for now just sending null
                 set_nav('section-id', qid);
                 // Also scroll to the element with id=`q-${qid}`
-                document.getElementById(`q-${qid}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                document
+                  .getElementById(`q-${qid}`)
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }}
               className={`
                 w-8 h-8 flex items-center justify-center text-sm font-medium rounded-md transition-all

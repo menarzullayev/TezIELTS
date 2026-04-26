@@ -19,17 +19,17 @@ export const useAns = create<AnsState>()(
       set_ans: (qid, val) => {
         log_i('ans_set', { qid, val });
         set((state) => ({
-          ans: { ...state.ans, [qid]: val }
+          ans: { ...state.ans, [qid]: val },
         }));
       },
       get_ans: (qid) => get().ans[qid] || '',
       clear_ans: () => {
         log_i('ans_clear');
         set({ ans: {} });
-      }
+      },
     }),
     {
-      name: 'sim_ans_st'
+      name: 'sim_ans_st',
     }
   )
 );

@@ -1,23 +1,23 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Providers from "@/components/providers";
-import { Toaster } from "@/components/ui/sonner";
-import Navbar from "@/components/layout/Navbar";
-import AuthModal from "@/components/auth/AuthModal";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+import Providers from '@/components/providers';
+import { Toaster } from '@/components/ui/sonner';
+import Navbar from '@/components/layout/Navbar';
+import AuthModal from '@/components/auth/AuthModal';
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "TezIELTS - Free Premium Mock Tests",
-  description: "High performance IELTS preparation platform.",
+  title: 'TezIELTS - Free Premium Mock Tests',
+  description: 'High performance IELTS preparation platform.',
 };
 
 export default function RootLayout({
@@ -33,9 +33,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-slate-50">
         <Providers>
           <Navbar />
-          <main className="flex-1">
-            {children}
-          </main>
+          <main className="flex-1">{children}</main>
           <AuthModal />
         </Providers>
         <Toaster />

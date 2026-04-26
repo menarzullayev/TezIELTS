@@ -1,12 +1,12 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface TestState {
-  tid: string | null
-  ans: Record<string, string>
-  setA: (qid: string, v: string) => void
-  setTid: (tid: string) => void
-  clear: () => void
+  tid: string | null;
+  ans: Record<string, string>;
+  setA: (qid: string, v: string) => void;
+  setTid: (tid: string) => void;
+  clear: () => void;
 }
 
 export const useTst = create<TestState>()(
@@ -22,4 +22,4 @@ export const useTst = create<TestState>()(
       name: 'tez-ielts-test-storage', // name of the item in the storage (must be unique)
     }
   )
-)
+);

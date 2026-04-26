@@ -54,3 +54,16 @@ GitHub Actions:
 
 - `frontend/` uchun format, lint, vitest, audit
 - `backend/` uchun ruff, bandit, pytest, docker build
+
+## Git Hooks
+
+Pushdan oldingi lokal tekshiruvlarni yoqish:
+
+```bash
+bash scripts/setup-git-hooks.sh
+```
+
+Bu quyidagilarni ishga tushiradi:
+
+- `pre-commit`: frontend format va lint, backend ruff va bandit
+- `pre-push`: frontend unit testlari, backend pytest va agar Docker mavjud bo'lsa backend image build

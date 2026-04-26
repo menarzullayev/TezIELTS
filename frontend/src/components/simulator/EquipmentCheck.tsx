@@ -10,7 +10,14 @@ interface EquipmentCheckProps {
 }
 
 export default function EquipmentCheck({ onComplete }: EquipmentCheckProps) {
-  const { isRecording, startRecording, stopRecording, analyzerNode, error, audioUrl } = useAudioRecorder({ partId: 'test_mic' });
+  const {
+    isRecording,
+    startRecording,
+    stopRecording,
+    analyzerNode,
+    error,
+    audioUrl,
+  } = useAudioRecorder({ partId: 'test_mic' });
   const [hasTested, setHasTested] = useState(false);
 
   const handleStart = async () => {
@@ -28,21 +35,27 @@ export default function EquipmentCheck({ onComplete }: EquipmentCheckProps) {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 text-primary rounded-full mb-4">
           <Mic className="w-8 h-8" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-800">Mikrofonni tekshirish</h2>
-        <p className="text-gray-500 mt-2">Speaking testni boshlashdan oldin mikrofoningiz ishlayotganiga ishonch hosil qiling.</p>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Mikrofonni tekshirish
+        </h2>
+        <p className="text-gray-500 mt-2">
+          Speaking testni boshlashdan oldin mikrofoningiz ishlayotganiga ishonch
+          hosil qiling.
+        </p>
       </div>
 
       <div className="space-y-6">
         <div className="p-6 bg-gray-50 rounded-xl border border-gray-100">
           <p className="text-sm font-medium text-gray-700 mb-4">
-            Quyidagi tugmani bosing va biror narsa deb gapiring (masalan: "Bir, ikki, uch"):
+            Quyidagi tugmani bosing va biror narsa deb gapiring (masalan: "Bir,
+            ikki, uch"):
           </p>
-          
+
           <div className="flex flex-col items-center gap-4">
             {isRecording ? (
               <>
                 <Waveform analyzerNode={analyzerNode} isActive={true} />
-                <button 
+                <button
                   onClick={handleStop}
                   className="px-6 py-2 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors"
                 >
@@ -50,7 +63,7 @@ export default function EquipmentCheck({ onComplete }: EquipmentCheckProps) {
                 </button>
               </>
             ) : (
-              <button 
+              <button
                 onClick={handleStart}
                 className="flex items-center gap-2 px-8 py-3 bg-primary text-white rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform"
               >
@@ -74,17 +87,20 @@ export default function EquipmentCheck({ onComplete }: EquipmentCheckProps) {
               <CheckCircle2 className="w-5 h-5" />
               <span className="font-semibold">Ovoz yozib olindi!</span>
             </div>
-            <p className="text-sm text-green-600 mb-4">Ovozingizni eshitib ko'ring, agar hamma narsa yaxshi bo'lsa, davom etishingiz mumkin.</p>
+            <p className="text-sm text-green-600 mb-4">
+              Ovozingizni eshitib ko'ring, agar hamma narsa yaxshi bo'lsa, davom
+              etishingiz mumkin.
+            </p>
             <audio src={audioUrl} controls className="w-full h-10" />
           </div>
         )}
 
-        <button 
+        <button
           disabled={!hasTested}
           onClick={onComplete}
           className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${
-            hasTested 
-              ? 'bg-slate-900 text-white hover:bg-slate-800' 
+            hasTested
+              ? 'bg-slate-900 text-white hover:bg-slate-800'
               : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
         >

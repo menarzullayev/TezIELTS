@@ -17,7 +17,7 @@ export function useAudioRecorder({ partId }: UseAudioRecorderProps) {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
-  
+
   // Expose analyzer node for waveform visualization
   const analyzerRef = useRef<AnalyserNode | null>(null);
 
@@ -27,7 +27,9 @@ export function useAudioRecorder({ partId }: UseAudioRecorderProps) {
       streamRef.current = stream;
 
       // Set up analyzer for waveform
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const audioContext = new (
+        window.AudioContext || (window as any).webkitAudioContext
+      )();
       const source = audioContext.createMediaStreamSource(stream);
       const analyzer = audioContext.createAnalyser();
       analyzer.fftSize = 256;
@@ -35,7 +37,12 @@ export function useAudioRecorder({ partId }: UseAudioRecorderProps) {
       analyzerRef.current = analyzer;
 
       // Try Opus first, fallback to standard types
-      const mimeTypes = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/webm', 'audio/ogg'];
+      const mimeTypes = [
+        'audio/webm;codecs=opus',
+        'audio/mp4',
+        'audio/webm',
+        'audio/ogg',
+      ];
       let selectedMimeType = '';
       for (const type of mimeTypes) {
         if (MediaRecorder.isTypeSupported(type)) {
@@ -45,10 +52,14 @@ export function useAudioRecorder({ partId }: UseAudioRecorderProps) {
       }
 
       if (!selectedMimeType) {
-        throw new Error("Sizning brauzeringiz ovoz yozish formatlarini qo'llab-quvvatlamaydi.");
+        throw new Error(
+          "Sizning brauzeringiz ovoz yozish formatlarini qo'llab-quvvatlamaydi."
+        );
       }
 
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: selectedMimeType });
+      const mediaRecorder = new MediaRecorder(stream, {
+        mimeType: selectedMimeType,
+      });
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
 
@@ -59,12 +70,18 @@ export function useAudioRecorder({ partId }: UseAudioRecorderProps) {
       };
 
       mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: selectedMimeType });
+        const audioBlob = new Blob(audioChunksRef.current, {
+          type: selectedMimeType,
+        });
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
-        
-        log_i('audio_recording_stopped', { partId, size: audioBlob.size, type: selectedMimeType });
-        
+
+        log_i('audio_recording_stopped', {
+          partId,
+          size: audioBlob.size,
+          type: selectedMimeType,
+        });
+
         // Save to IndexedDB as backup
         try {
           await localforage.setItem(`speaking_backup_${partId}`, audioBlob);
@@ -78,24 +95,28 @@ export function useAudioRecorder({ partId }: UseAudioRecorderProps) {
       setIsRecording(true);
       setError(null);
       log_i('audio_recording_started', { partId });
-
     } catch (err: any) {
       log_e('mic_permission_err', err);
-      setError(err.name === 'NotAllowedError' ? 
-        "Mikrofonga ruxsat berilmadi. Iltimos, brauzer sozlamalaridan ruxsat bering." : 
-        err.message || "Ovoz yozish qurilmasini faollashtirib bo'lmadi.");
+      setError(
+        err.name === 'NotAllowedError'
+          ? 'Mikrofonga ruxsat berilmadi. Iltimos, brauzer sozlamalaridan ruxsat bering.'
+          : err.message || "Ovoz yozish qurilmasini faollashtirib bo'lmadi."
+      );
     }
   }, [partId]);
 
   const stopRecording = useCallback(() => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== 'inactive'
+    ) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
       setIsPaused(false);
-      
+
       // Stop all tracks to release microphone
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current.getTracks().forEach((track) => track.stop());
       }
     }
   }, []);
@@ -107,6 +128,6 @@ export function useAudioRecorder({ partId }: UseAudioRecorderProps) {
     error,
     startRecording,
     stopRecording,
-    analyzerNode: analyzerRef.current
+    analyzerNode: analyzerRef.current,
   };
 }
